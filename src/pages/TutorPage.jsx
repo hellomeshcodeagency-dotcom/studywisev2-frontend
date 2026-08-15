@@ -130,7 +130,7 @@ export default function TutorPage() {
               </div>
             ))}
           </div>
-        </AppShell>
+        </aside>
 
         {/* Main chat */}
         <div className="flex-1 flex flex-col overflow-hidden">
