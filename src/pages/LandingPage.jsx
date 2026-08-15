@@ -46,7 +46,7 @@ export default function LandingPage() {
       }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <img src="/logo.png" alt="Studiwise" style={{ height: 44, width: 'auto', objectFit: 'contain' }} />
+            <img src="/logo.png" alt="Studiwise" style={{ height: 44, width: 'auto', objectFit: 'contain', background: '#fff', borderRadius: 10, padding: 5 }} />
             <span style={{ fontWeight: 900, fontSize: '1.25rem', color: '#fff', letterSpacing: '-0.02em' }}>Studiwise</span>
           </div>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
@@ -280,7 +280,7 @@ export default function LandingPage() {
       <footer style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: '#080B18', padding: '28px 24px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <img src="/logo.png" alt="Studiwise" style={{ height: 32, width: 'auto', objectFit: 'contain' }} />
+            <img src="/logo.png" alt="Studiwise" style={{ height: 36, width: 'auto', objectFit: 'contain', background: '#fff', borderRadius: 8, padding: 4 }} />
             <span style={{ fontWeight: 800, fontSize: '0.95rem', color: '#fff' }}>Studiwise</span>
           </div>
           <p style={{ color: '#1E293B', fontSize: '0.8rem' }}>© 2025 Studiwise. All rights reserved.</p>
