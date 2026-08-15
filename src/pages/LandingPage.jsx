@@ -49,23 +49,23 @@ export default function LandingPage() {
     <div style={{ minHeight: '100vh', background: '#04050f', color: '#F1F5F9', fontFamily: 'Inter, sans-serif' }}>
 
       {/* NAV */}
-      <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(4,5,15,0.9)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '0 24px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <img src="/logo.png" alt="Studiwise" style={{ height: 44, width: 'auto', objectFit: 'contain', background: '#fff', borderRadius: 10, padding: 5 }} />
-            <span style={{ fontWeight: 900, fontSize: '1.25rem', color: '#fff', letterSpacing: '-0.02em' }}>Studiwise</span>
+      <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(4,5,15,0.9)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '0 16px' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 60 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+            <img src="/logo.png" alt="Studiwise" style={{ height: 38, width: 'auto', objectFit: 'contain', background: '#fff', borderRadius: 8, padding: 4 }} />
+            <span style={{ fontWeight: 900, fontSize: '1.1rem', color: '#fff', letterSpacing: '-0.02em' }}>Studiwise</span>
           </div>
-          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-            <Link to="/login" style={{ padding: '9px 20px', borderRadius: 10, fontWeight: 600, fontSize: '0.875rem', color: '#94A3B8', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', textDecoration: 'none' }}>Log in</Link>
-            <Link to="/register" style={{ padding: '9px 20px', borderRadius: 10, fontWeight: 700, fontSize: '0.875rem', color: '#fff', background: '#1A56DB', textDecoration: 'none', boxShadow: '0 0 24px rgba(26,86,219,0.4)' }}>Get Started Free</Link>
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
+            <Link to="/login" style={{ padding: '8px 14px', borderRadius: 9, fontWeight: 600, fontSize: '0.82rem', color: '#94A3B8', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', textDecoration: 'none', whiteSpace: 'nowrap' }}>Log in</Link>
+            <Link to="/register" style={{ padding: '8px 14px', borderRadius: 9, fontWeight: 700, fontSize: '0.82rem', color: '#fff', background: '#1A56DB', textDecoration: 'none', whiteSpace: 'nowrap', boxShadow: '0 0 20px rgba(26,86,219,0.4)' }}>Get Started</Link>
           </div>
         </div>
       </nav>
 
       {/* FOMO BAR */}
-      <div style={{ background: 'rgba(26,86,219,0.15)', borderBottom: '1px solid rgba(26,86,219,0.25)', padding: '10px 24px', textAlign: 'center' }}>
-        <span style={{ fontSize: '0.82rem', color: '#93C5FD' }}>
-          🔥 <strong style={{ color: '#fff' }}>847 students</strong> from your department joined this week — don't get left behind
+      <div style={{ background: 'rgba(26,86,219,0.15)', borderBottom: '1px solid rgba(26,86,219,0.25)', padding: '9px 16px', textAlign: 'center' }}>
+        <span style={{ fontSize: '0.8rem', color: '#93C5FD', lineHeight: 1.5 }}>
+          🔥 <strong style={{ color: '#fff' }}>847 students</strong> joined this week — don't get left behind
         </span>
       </div>
 
@@ -159,15 +159,39 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* STATS */}
-      <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)', background: '#080B18', padding: '40px 24px' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20, textAlign: 'center' }}>
-          {[{ target: 10000, suffix: '+', label: 'Students Served' }, { target: 500, suffix: '+', label: 'Past Questions' }, { target: 15, suffix: '+', label: 'Courses Covered' }, { target: 100, suffix: '%', label: 'Free to Start' }].map(s => (
-            <div key={s.label}>
-              <div style={{ fontWeight: 900, fontSize: 'clamp(1.5rem, 3vw, 2rem)', color: '#fff', marginBottom: 6 }}>
-                <Counter target={s.target} suffix={s.suffix} />
-              </div>
-              <div style={{ fontSize: '0.8rem', color: '#475569' }}>{s.label}</div>
+      {/* STATS MARQUEE */}
+      <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)', background: '#080B18', padding: '32px 0', overflow: 'hidden' }}>
+        <style>{`
+          @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 18s linear infinite;
+          }
+          .marquee-track:hover { animation-play-state: paused; }
+        `}</style>
+        <div className="marquee-track">
+          {[...Array(2)].map((_, di) => (
+            <div key={di} style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+              {[
+                { value: '10,000+', label: 'Students Served' },
+                { value: '500+', label: 'Past Questions' },
+                { value: '15+', label: 'Courses Covered' },
+                { value: '100%', label: 'Free to Start' },
+                { value: '24/7', label: 'Always Available' },
+                { value: '3 Years', label: 'of Past Questions' },
+              ].map((s, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+                  <div style={{ textAlign: 'center', padding: '0 40px', whiteSpace: 'nowrap' }}>
+                    <div style={{ fontWeight: 900, fontSize: '1.6rem', color: '#fff', marginBottom: 4 }}>{s.value}</div>
+                    <div style={{ fontSize: '0.78rem', color: '#475569' }}>{s.label}</div>
+                  </div>
+                  <div style={{ width: 1, height: 40, background: 'rgba(255,255,255,0.08)', flexShrink: 0 }} />
+                </div>
+              ))}
             </div>
           ))}
         </div>
