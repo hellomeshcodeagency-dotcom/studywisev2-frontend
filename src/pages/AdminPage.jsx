@@ -243,20 +243,20 @@ export default function AdminPage() {
                 <p className="text-xs text-gray-500">{u.department_name} · {u.level_name}</p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
-                {u.is_admin && (
+                {u.role === 'admin' && (
                   <span className="text-xs bg-violet-800 text-violet-300 px-2 py-0.5 rounded-full">
                     Admin
                   </span>
                 )}
                 <button
-                  onClick={() => toggleAdmin(u.id, u.is_admin)}
+                  onClick={() => toggleAdmin(u.id, u.role === 'admin')}
                   className={`text-xs px-3 py-1 rounded-lg transition ${
-                    u.is_admin
+                    u.role === 'admin'
                       ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
                       : "bg-violet-800 hover:bg-violet-700 text-violet-200"
                   }`}
                 >
-                  {u.is_admin ? "Revoke" : "Make Admin"}
+                  {u.role === 'admin' ? "Revoke" : "Make Admin"}
                 </button>
               </div>
             </div>
