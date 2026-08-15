@@ -21,7 +21,13 @@ export default function CourseDetailPage() {
 
   async function handleDownload(upload) {
     await api.patch(`/uploads/${upload.id}/download`).catch(() => {})
-    window.open(upload.file_url, '_blank')
+    const a = document.createElement('a')
+    a.href = upload.file_url
+    a.download = upload.title || 'download'
+    a.target = '_blank'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
   }
 
   if (loading) return (
