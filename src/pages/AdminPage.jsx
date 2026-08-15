@@ -7,6 +7,7 @@ export default function AdminPage() {
   const [tab, setTab] = useState("overview");
   const [stats, setStats] = useState(null);
   const [pending, setPending] = useState([]);
+  const [allUploads, setAllUploads] = useState([]);
   const [users, setUsers] = useState([]);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,14 +21,16 @@ export default function AdminPage() {
   async function fetchAll() {
     setLoading(true);
     try {
-      const [sRes, pRes, uRes, cRes] = await Promise.all([
+      const [sRes, pRes, uRes, cRes, aRes] = await Promise.all([
         api.get("/admin/stats"),
         api.get("/uploads/admin/pending"),
         api.get("/admin/users"),
         api.get("/admin/courses"),
+        api.get("/uploads/admin/all"),
       ]);
       setStats(sRes.data);
       setPending(pRes.data.uploads || pRes.data || []);
+      setAllUploads(aRes.data.uploads || aRes.data || []);
       setUsers(uRes.data);
       setCourses(cRes.data);
     } catch (e) {
@@ -35,6 +38,26 @@ export default function AdminPage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  async function deleteUpload(id) {
+    if (!window.confirm("Delete this upload?")) return;
+    try {
+      await api.delete(`/uploads/${id}`);
+      setAllUploads((prev) => prev.filter((u) => u.id !== id));
+      setPending((prev) => prev.filter((u) => u.id !== id));
+      flash("Upload deleted.");
+    } catch (e) { flash("Delete failed.", true); }
+  }
+
+  async function clearAllUploads() {
+    if (!window.confirm("Delete ALL uploads? This cannot be undone.")) return;
+    try {
+      await api.delete("/uploads/admin/all");
+      setAllUploads([]);
+      setPending([]);
+      flash("All uploads cleared.");
+    } catch (e) { flash("Failed to clear uploads.", true); }
   }
 
   async function moderate(id, status) {
@@ -178,50 +201,54 @@ export default function AdminPage() {
       {/* Tab: Uploads */}
       {tab === "uploads" && (
         <div className="space-y-3">
-          <h2 className="font-semibold text-white">Pending Uploads ({pending.length})</h2>
-          {pending.length === 0 ? (
+          <div className="flex items-center justify-between">
+            <h2 className="font-semibold text-white">All Uploads ({allUploads.length})</h2>
+            <button
+              onClick={clearAllUploads}
+              className="text-xs bg-red-900 hover:bg-red-800 text-red-300 px-3 py-1.5 rounded-lg transition"
+            >
+              🗑 Clear All
+            </button>
+          </div>
+          {allUploads.length === 0 ? (
             <div className="bg-gray-800 border border-gray-700 rounded-xl p-8 text-center text-gray-400">
-              No pending uploads. All clear ✅
+              No uploads yet.
             </div>
           ) : (
-            pending.map((upload) => (
-              <div
-                key={upload.id}
-                className="bg-gray-800 border border-gray-700 rounded-xl p-4 space-y-3"
-              >
+            allUploads.map((upload) => (
+              <div key={upload.id} className="bg-gray-800 border border-gray-700 rounded-xl p-4 space-y-3">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <p className="text-sm font-medium text-white truncate">{upload.title}</p>
                     <p className="text-xs text-gray-400">
-                      {upload.course_code} · {upload.resource_type} · by {upload.uploader_name}
+                      {upload.course_code} · {upload.type} · by {upload.uploader_name}
                     </p>
-                    {upload.description && (
-                      <p className="text-xs text-gray-500 mt-1">{upload.description}</p>
-                    )}
+                    <span className={`text-xs font-bold ${
+                      upload.status === 'approved' ? 'text-green-400' :
+                      upload.status === 'rejected' ? 'text-red-400' : 'text-yellow-400'
+                    }`}>
+                      {upload.status}
+                    </span>
                   </div>
-                  <a
-                    href={upload.file_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-violet-400 hover:text-violet-300 shrink-0"
-                  >
-                    View ↗
-                  </a>
+                  <div className="flex gap-2 shrink-0">
+                    <a href={upload.file_url} target="_blank" rel="noopener noreferrer"
+                      className="text-xs text-violet-400 hover:text-violet-300">View ↗</a>
+                    <button onClick={() => deleteUpload(upload.id)}
+                      className="text-xs text-red-400 hover:text-red-300">Delete</button>
+                  </div>
                 </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => moderate(upload.id, "approved")}
-                    className="flex-1 bg-green-700 hover:bg-green-600 text-white text-xs py-2 rounded-lg transition"
-                  >
-                    ✓ Approve
-                  </button>
-                  <button
-                    onClick={() => moderate(upload.id, "rejected")}
-                    className="flex-1 bg-red-800 hover:bg-red-700 text-white text-xs py-2 rounded-lg transition"
-                  >
-                    ✕ Reject
-                  </button>
-                </div>
+                {upload.status === 'pending' && (
+                  <div className="flex gap-2">
+                    <button onClick={() => moderate(upload.id, "approved")}
+                      className="flex-1 bg-green-700 hover:bg-green-600 text-white text-xs py-2 rounded-lg transition">
+                      ✓ Approve
+                    </button>
+                    <button onClick={() => moderate(upload.id, "rejected")}
+                      className="flex-1 bg-red-800 hover:bg-red-700 text-white text-xs py-2 rounded-lg transition">
+                      ✕ Reject
+                    </button>
+                  </div>
+                )}
               </div>
             ))
           )}
