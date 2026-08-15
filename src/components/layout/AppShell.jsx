@@ -37,7 +37,7 @@ export default function AppShell({ children }) {
       {/* Logo */}
       <div className="px-5 py-5 border-b border-white/8 flex items-center justify-between">
         <Link to="/dashboard" className="flex items-center gap-2.5 no-underline" onClick={() => setOpen(false)}>
-          <img src="/logo.png" alt="Studiwise" className="w-8 h-8 rounded-lg object-contain"/>
+          <img src="/logo.png" alt="Studiwise" style={{ height:44, width:'auto', background:'#fff', borderRadius:10, padding:5, objectFit:'contain', display:'block' }}/>
           <div>
             <div className="font-black text-white text-base leading-tight">Studiwise</div>
             <div className="text-[0.6rem] text-blue-400 font-semibold">FUT Minna</div>
@@ -131,7 +131,7 @@ export default function AppShell({ children }) {
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 h-14 flex items-center justify-between px-4 border-b border-white/8"
            style={{ background:'rgba(10,15,30,0.97)', backdropFilter:'blur(20px)' }}>
         <Link to="/dashboard" className="flex items-center gap-2 no-underline">
-          <img src="/logo.png" alt="Studiwise" className="w-7 h-7 rounded-lg object-contain"/>
+          <img src="/logo.png" alt="Studiwise" style={{ height:38, width:'auto', background:'#fff', borderRadius:8, padding:4, objectFit:'contain', display:'block' }}/>
           <span className="font-black text-white text-base">Studiwise</span>
         </Link>
         <button onClick={() => setOpen(true)} className="text-slate-400 hover:text-white p-1"><Menu size={22}/></button>
