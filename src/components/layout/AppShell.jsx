@@ -100,9 +100,9 @@ export default function AppShell({ children }) {
       )}
 
       {/* User footer */}
-      <div className="px-4 py-4 border-t border-white/8">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
+      <div className="px-4 py-4 border-t border-white/8 space-y-3">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
                style={{ background:'linear-gradient(135deg,#1A56DB,#F97316)' }}>
             {user?.name?.[0]?.toUpperCase()}
           </div>
@@ -111,8 +111,12 @@ export default function AppShell({ children }) {
             <div className="text-[0.62rem] text-slate-500 truncate">{user?.email}</div>
           </div>
         </div>
-        <button onClick={handleLogout} className="flex items-center gap-2 text-xs text-slate-500 hover:text-slate-300 transition-colors">
-          <LogOut size={12}/> Log out
+        <button onClick={handleLogout}
+          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all"
+          style={{ background:'rgba(239,68,68,0.1)', border:'1px solid rgba(239,68,68,0.25)', color:'#F87171' }}
+          onMouseEnter={e => { e.currentTarget.style.background='rgba(239,68,68,0.2)' }}
+          onMouseLeave={e => { e.currentTarget.style.background='rgba(239,68,68,0.1)' }}>
+          <LogOut size={14}/> Log Out
         </button>
       </div>
     </>
