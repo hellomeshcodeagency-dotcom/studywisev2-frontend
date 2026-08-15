@@ -20,17 +20,8 @@ export default function CourseDetailPage() {
   }, [id])
 
   async function handleDownload(upload) {
-    const url = `${import.meta.env.VITE_API_URL}/uploads/${upload.id}/file`
-    const token = localStorage.getItem('sw_token')
-    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
-    const blob = await res.blob()
-    const ext = upload.file_url.split('.').pop().split('?')[0] || 'pdf'
-    const filename = `${upload.title.replace(/[^a-z0-9]/gi, '-')}.${ext}`
-    const a = document.createElement('a')
-    a.href = URL.createObjectURL(blob)
-    a.download = filename
-    a.click()
-    URL.revokeObjectURL(a.href)
+    await api.patch(`/uploads/${upload.id}/download`).catch(() => {})
+    window.open(upload.file_url, '_blank')
   }
 
   if (loading) return (
