@@ -21,13 +21,9 @@ export default function CourseDetailPage() {
 
   async function handleDownload(upload) {
     await api.patch(`/uploads/${upload.id}/download`).catch(() => {})
-    const a = document.createElement('a')
-    a.href = upload.file_url
-    a.download = upload.title || 'download'
-    a.target = '_blank'
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
+    // Add fl_attachment to force download instead of opening in browser
+    const url = upload.file_url.replace('/raw/upload/', '/raw/upload/fl_attachment/')
+    window.open(url, '_blank')
   }
 
   if (loading) return (
