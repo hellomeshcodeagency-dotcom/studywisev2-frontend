@@ -2,34 +2,34 @@ import { Link } from 'react-router-dom'
 
 const features = [
   {
-    icon: '🤖',
-    title: 'AI Study Tutor',
-    desc: 'Get instant, detailed explanations for any topic in your courses. Your personal tutor available 24/7.',
-  },
-  {
     icon: '📋',
     title: 'Past Question Bank',
-    desc: 'Access years of past exam questions with AI-generated solutions. Study smarter, not harder.',
+    desc: 'Browse and download years of past exam questions across all your courses. The easiest way to prepare for exams.',
   },
   {
     icon: '📖',
     title: 'Course Materials',
-    desc: 'All your course outlines, objectives, and recommended textbooks organized in one clean dashboard.',
+    desc: 'All your course outlines, objectives, credit units and recommended textbooks — organized and ready to access.',
   },
   {
     icon: '📊',
     title: 'GPA Calculator',
-    desc: 'Track your academic performance. Calculate semester GPA and cumulative CGPA instantly.',
+    desc: 'Calculate your semester GPA and cumulative CGPA instantly using your school\'s official grading scale.',
   },
   {
     icon: '⬆️',
     title: 'Student Uploads',
-    desc: 'Share and access lecture notes, summaries and study materials uploaded by your peers.',
+    desc: 'Share lecture notes, summaries and study materials with your department. Learn better together.',
+  },
+  {
+    icon: '💬',
+    title: 'Study Assistant',
+    desc: 'Stuck on a topic? Get clear explanations and worked examples for anything in your course syllabus.',
   },
   {
     icon: '🔍',
     title: 'Smart Search',
-    desc: 'Find anything instantly — courses, past questions, uploaded materials — all in one search.',
+    desc: 'Find courses, past questions and study materials instantly — everything in one search.',
   },
 ]
 
@@ -90,18 +90,18 @@ export default function LandingPage() {
             fontSize: 'clamp(2.8rem, 7vw, 5rem)',
             marginBottom: 24,
           }}>
-            Study Smarter.<br />
+            Everything you need<br />
             <span style={{
               background: 'linear-gradient(90deg, #3B82F6 0%, #60A5FA 50%, #818CF8 100%)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-            }}>Score Higher.</span>
+            }}>to ace your exams.</span>
           </h1>
 
           <p style={{
             color: '#64748B', fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
             lineHeight: 1.75, maxWidth: 560, margin: '0 auto 44px',
           }}>
-            Studiwise gives university students an AI-powered academic edge — past questions, course materials, a 24/7 AI tutor, and GPA tracking, all in one platform.
+            Studiwise is your all-in-one academic portal — past questions, course materials, GPA tracking, and student uploads. Built so you spend less time searching and more time studying.
           </p>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center' }}>
@@ -122,9 +122,9 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Hero mockup card */}
+        {/* Hero mockup — dashboard preview */}
         <div style={{
-          maxWidth: 680, margin: '64px auto 0',
+          maxWidth: 720, margin: '64px auto 0',
           background: '#0D1117', border: '1px solid rgba(255,255,255,0.08)',
           borderRadius: 20, overflow: 'hidden',
           boxShadow: '0 60px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05)',
@@ -134,44 +134,44 @@ export default function LandingPage() {
             {['#EF4444','#F59E0B','#10B981'].map(c => (
               <div key={c} style={{ width: 10, height: 10, borderRadius: '50%', background: c }} />
             ))}
-            <span style={{ fontSize: '0.72rem', color: '#334155', marginLeft: 8 }}>AI Tutor · PHY 101 — Mechanics</span>
+            <span style={{ fontSize: '0.72rem', color: '#334155', marginLeft: 8 }}>Studiwise — Dashboard</span>
           </div>
-          {/* chat */}
-          <div style={{ padding: '20px 20px', display: 'flex', flexDirection: 'column', gap: 16, textAlign: 'left' }}>
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <div style={{
-                background: '#1A56DB', color: '#fff', borderRadius: '16px 16px 4px 16px',
-                padding: '10px 16px', fontSize: '0.85rem', maxWidth: '72%', lineHeight: 1.55,
-              }}>
-                Explain Newton's Second Law with a real-life example
-              </div>
+          {/* dashboard content */}
+          <div style={{ padding: '24px 20px', textAlign: 'left' }}>
+            {/* greeting */}
+            <div style={{ marginBottom: 20 }}>
+              <div style={{ fontSize: '0.75rem', color: '#475569', marginBottom: 4 }}>Good morning 👋</div>
+              <div style={{ fontSize: '1rem', fontWeight: 700, color: '#F1F5F9' }}>Welcome back, Amaka</div>
             </div>
-            <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-              <div style={{
-                width: 32, height: 32, borderRadius: '50%', flexShrink: 0,
-                background: 'linear-gradient(135deg,#1A56DB,#60A5FA)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '0.7rem', fontWeight: 900, color: '#fff',
-              }}>AI</div>
-              <div style={{
-                background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)',
-                borderRadius: '16px 16px 16px 4px', padding: '12px 16px',
-                fontSize: '0.85rem', color: '#CBD5E1', lineHeight: 1.65, maxWidth: '85%',
-              }}>
-                <strong style={{ color: '#60A5FA' }}>Newton's Second Law</strong> states that Force = Mass × Acceleration (F = ma).<br /><br />
-                <span style={{ color: '#94A3B8' }}>
-                  Real-life example: When you kick a football, the harder you kick (more force), the faster it accelerates. A heavier ball requires more force to reach the same speed...
-                </span>
-              </div>
+            {/* stat cards */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 20 }}>
+              {[
+                { label: 'Courses', value: '7', color: '#1A56DB' },
+                { label: 'Past Questions', value: '42', color: '#10B981' },
+                { label: 'Current GPA', value: '4.2', color: '#F59E0B' },
+              ].map(s => (
+                <div key={s.label} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12, padding: '12px 14px' }}>
+                  <div style={{ fontSize: '1.3rem', fontWeight: 900, color: s.color }}>{s.value}</div>
+                  <div style={{ fontSize: '0.7rem', color: '#475569', marginTop: 2 }}>{s.label}</div>
+                </div>
+              ))}
             </div>
-            {/* typing indicator */}
-            <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-              <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'linear-gradient(135deg,#1A56DB,#60A5FA)', flexShrink: 0 }} />
-              <div style={{ display: 'flex', gap: 5, padding: '10px 14px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12 }}>
-                {[0,1,2].map(i => (
-                  <div key={i} style={{ width: 7, height: 7, borderRadius: '50%', background: '#334155', animation: `pulse 1.4s ease-in-out ${i * 0.2}s infinite` }} />
-                ))}
-              </div>
+            {/* recent courses */}
+            <div style={{ fontSize: '0.72rem', color: '#475569', fontWeight: 600, marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Your Courses</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {[
+                { code: 'PHY 101', title: 'Mechanics & Properties of Matter', units: 3 },
+                { code: 'MTH 101', title: 'Elementary Mathematics I', units: 3 },
+                { code: 'CHM 101', title: 'General Chemistry I', units: 3 },
+              ].map(c => (
+                <div key={c.code} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 10, padding: '10px 14px' }}>
+                  <div>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#F1F5F9' }}>{c.code}</div>
+                    <div style={{ fontSize: '0.68rem', color: '#475569' }}>{c.title}</div>
+                  </div>
+                  <div style={{ fontSize: '0.68rem', color: '#1A56DB', fontWeight: 600, background: 'rgba(26,86,219,0.12)', padding: '3px 8px', borderRadius: 6 }}>{c.units} units</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -182,8 +182,8 @@ export default function LandingPage() {
         <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20, textAlign: 'center' }}>
           {[
             { value: '10,000+', label: 'Students Served' },
-            { value: '24/7', label: 'AI Tutor Access' },
             { value: '500+', label: 'Past Questions' },
+            { value: '15+', label: 'Courses Covered' },
             { value: '100%', label: 'Free to Start' },
           ].map(s => (
             <div key={s.label}>
@@ -262,7 +262,7 @@ export default function LandingPage() {
               Your grades will thank you.
             </h2>
             <p style={{ color: '#64748B', marginBottom: 36, lineHeight: 1.7 }}>
-              Join thousands of students already using Studiwise to ace their exams.
+              Join thousands of students already using Studiwise to organise their studies and ace their exams.
             </p>
             <Link to="/register" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
