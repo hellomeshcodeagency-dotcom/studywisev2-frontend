@@ -27,7 +27,7 @@ export default function AdminPage() {
         api.get("/admin/courses"),
       ]);
       setStats(sRes.data);
-      setPending(pRes.data);
+      setPending(pRes.data.uploads || pRes.data || []);
       setUsers(uRes.data);
       setCourses(cRes.data);
     } catch (e) {
