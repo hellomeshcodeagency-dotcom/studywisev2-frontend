@@ -31,7 +31,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 no-underline mb-6">
-            <img src="/logo.png" alt="Studiwise" className="w-10 h-10 rounded-xl object-contain"/>
+            <img src="/logo.png" alt="Studiwise" style={{ height:64, width:'auto', background:'#fff', borderRadius:14, padding:7, objectFit:'contain', display:'block' }}/>
           </Link>
           <h1 className="font-black text-2xl text-white mb-2">Welcome back</h1>
           <p className="text-slate-400 text-sm">Log in to your Studiwise account</p>
