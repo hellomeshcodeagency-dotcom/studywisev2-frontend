@@ -20,10 +20,17 @@ export default function CourseDetailPage() {
   }, [id])
 
   async function handleDownload(upload) {
-    await api.patch(`/uploads/${upload.id}/download`).catch(() => {})
-    // Add fl_attachment to force download instead of opening in browser
-    const url = upload.file_url.replace('/raw/upload/', '/raw/upload/fl_attachment/')
-    window.open(url, '_blank')
+    const url = `${import.meta.env.VITE_API_URL}/uploads/${upload.id}/file`
+    const token = localStorage.getItem('sw_token')
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+    const blob = await res.blob()
+    const ext = upload.file_url.split('.').pop().split('?')[0] || 'pdf'
+    const filename = `${upload.title.replace(/[^a-z0-9]/gi, '-')}.${ext}`
+    const a = document.createElement('a')
+    a.href = URL.createObjectURL(blob)
+    a.download = filename
+    a.click()
+    URL.revokeObjectURL(a.href)
   }
 
   if (loading) return (
