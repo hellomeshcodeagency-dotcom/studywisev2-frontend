@@ -135,7 +135,12 @@ export default function CourseDetailPage() {
               </div>
             ) : (
               <>
-                {[['📝 Notes', notes], ['📋 Summaries', summaries], ['📚 Textbooks', textbooks]].map(([label, items]) =>
+                {[
+                  ['📝 Notes', notes],
+                  ['📋 Summaries', summaries],
+                  ['📚 Textbooks', textbooks],
+                  ['📋 Past Questions', resources.filter(r => r.type === 'past_question')]
+                ].map(([label, items]) =>
                   items.length > 0 && (
                     <div key={label} className="card p-5">
                       <h3 className="font-bold text-white mb-3 text-sm">{label}</h3>
@@ -164,14 +169,14 @@ export default function CourseDetailPage() {
         {/* Past Questions */}
         {tab === 'past-q' && (
           <div className="space-y-3">
-            {past_questions.length === 0 ? (
+            {past_questions.length === 0 && resources.filter(r => r.type === 'past_question').length === 0 ? (
               <div className="card p-12 text-center">
                 <div className="text-4xl mb-3">📋</div>
                 <h3 className="font-bold text-white mb-2">No past questions yet</h3>
                 <p className="text-slate-400 text-sm mb-4">Upload past questions to help your classmates!</p>
                 <Link to="/upload" className="btn-primary text-sm">Upload Past Question</Link>
               </div>
-            ) : past_questions.map(pq => (
+            ) : [...past_questions, ...resources.filter(r => r.type === 'past_question' && !past_questions.find(pq => pq.upload_id === r.id))].map(pq => (
               <div key={pq.id} className="card p-5 flex items-center gap-4 flex-wrap">
                 <FileQuestion size={18} className="text-blue-400 flex-shrink-0"/>
                 <div className="flex-1 min-w-0">
