@@ -19,9 +19,10 @@ export default function CourseDetailPage() {
       .finally(() => setLoading(false))
   }, [id])
 
-  async function handleDownload(upload) {
-    await api.patch(`/uploads/${upload.id}/download`).catch(() => {})
-    window.open(upload.file_url, '_blank')
+  function handleDownload(upload) {
+    const token = localStorage.getItem('sw_token')
+    const base = import.meta.env.VITE_API_URL
+    window.open(`${base}/uploads/${upload.id}/download?token=${token}`, '_blank')
   }
 
   if (loading) return (
