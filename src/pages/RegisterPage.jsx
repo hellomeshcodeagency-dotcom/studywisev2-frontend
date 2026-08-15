@@ -5,6 +5,15 @@ import api from '../api/axios.js'
 import toast from 'react-hot-toast'
 import { Eye, EyeOff } from 'lucide-react'
 
+function Field({ label, children }) {
+  return (
+    <div>
+      <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">{label}</label>
+      {children}
+    </div>
+  )
+}
+
 export default function RegisterPage() {
   const [form, setForm]     = useState({ name:'', email:'', password:'', matric_no:'', university_id:'', faculty_id:'', department_id:'', level_id:'' })
   const [showPw, setShowPw] = useState(false)
@@ -56,13 +65,6 @@ export default function RegisterPage() {
     } finally { setLoading(false) }
   }
 
-  const Field = ({label, children}) => (
-    <div>
-      <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">{label}</label>
-      {children}
-    </div>
-  )
-
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-12" style={{ background:'#020817' }}>
       <div className="w-full max-w-lg">
@@ -71,7 +73,7 @@ export default function RegisterPage() {
             <img src="/logo.png" alt="Studiwise" style={{ height:64, width:'auto', background:'#fff', borderRadius:14, padding:7, objectFit:'contain', display:'block' }}/>
           </Link>
           <h1 className="font-black text-2xl text-white mb-2">Create your account</h1>
-          <p className="text-slate-400 text-sm">Join Studiwise — FUT Minna Academic Portal</p>
+          <p className="text-slate-400 text-sm">Join Studiwise. Universities Academic Portal</p>
         </div>
 
         <div className="card p-7">
