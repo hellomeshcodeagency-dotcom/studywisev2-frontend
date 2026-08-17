@@ -74,6 +74,23 @@ export default function AdminPage() {
     }
   }
 
+  async function deleteUser(id) {
+    if (!window.confirm("Delete this user? They can re-register with the same email.")) return;
+    try {
+      await api.delete(`/admin/users/${id}`);
+      setUsers((prev) => prev.filter((u) => u.id !== id));
+      flash("User deleted.");
+    } catch (e) { flash("Delete failed.", true); }
+  }
+
+  async function toggleSuspend(id, isSuspended) {
+    try {
+      await api.patch(`/admin/users/${id}`, { is_suspended: !isSuspended });
+      setUsers((prev) => prev.map((u) => u.id === id ? { ...u, is_suspended: !isSuspended } : u));
+      flash(isSuspended ? "User unsuspended." : "User suspended.");
+    } catch (e) { flash("Action failed.", true); }
+  }
+
   async function toggleAdmin(userId, currentVal) {
     try {
       await api.patch(`/admin/users/${userId}`, { is_admin: !currentVal });
@@ -260,30 +277,30 @@ export default function AdminPage() {
         <div className="space-y-3">
           <h2 className="font-semibold text-white">All Users ({users.length})</h2>
           {users.map((u) => (
-            <div
-              key={u.id}
-              className="bg-gray-800 border border-gray-700 rounded-xl p-4 flex items-center justify-between gap-2"
-            >
-              <div className="min-w-0">
-                <p className="text-sm font-medium text-white truncate">{u.name}</p>
-                <p className="text-xs text-gray-400 truncate">{u.email}</p>
-                <p className="text-xs text-gray-500">{u.department_name} · {u.level_name}</p>
+            <div key={u.id} className="bg-gray-800 border border-gray-700 rounded-xl p-4 space-y-3">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="text-sm font-medium text-white truncate">{u.name}</p>
+                    {u.role === 'admin' && <span className="text-xs bg-violet-800 text-violet-300 px-2 py-0.5 rounded-full">Admin</span>}
+                    {u.is_suspended && <span className="text-xs bg-red-900 text-red-300 px-2 py-0.5 rounded-full">Suspended</span>}
+                  </div>
+                  <p className="text-xs text-gray-400 truncate">{u.email}</p>
+                  <p className="text-xs text-gray-500">{u.department_name} · {u.level_name}</p>
+                </div>
               </div>
-              <div className="flex items-center gap-2 shrink-0">
-                {u.role === 'admin' && (
-                  <span className="text-xs bg-violet-800 text-violet-300 px-2 py-0.5 rounded-full">
-                    Admin
-                  </span>
-                )}
-                <button
-                  onClick={() => toggleAdmin(u.id, u.role === 'admin')}
-                  className={`text-xs px-3 py-1 rounded-lg transition ${
-                    u.role === 'admin'
-                      ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
-                      : "bg-violet-800 hover:bg-violet-700 text-violet-200"
-                  }`}
-                >
-                  {u.role === 'admin' ? "Revoke" : "Make Admin"}
+              <div className="flex flex-wrap gap-2">
+                <button onClick={() => toggleAdmin(u.id, u.role === 'admin')}
+                  className={`text-xs px-3 py-1.5 rounded-lg transition ${u.role === 'admin' ? "bg-gray-700 hover:bg-gray-600 text-gray-300" : "bg-violet-800 hover:bg-violet-700 text-violet-200"}`}>
+                  {u.role === 'admin' ? "Revoke Admin" : "Make Admin"}
+                </button>
+                <button onClick={() => toggleSuspend(u.id, u.is_suspended)}
+                  className={`text-xs px-3 py-1.5 rounded-lg transition ${u.is_suspended ? "bg-green-800 hover:bg-green-700 text-green-200" : "bg-yellow-800 hover:bg-yellow-700 text-yellow-200"}`}>
+                  {u.is_suspended ? "Unsuspend" : "Suspend"}
+                </button>
+                <button onClick={() => deleteUser(u.id)}
+                  className="text-xs px-3 py-1.5 rounded-lg transition bg-red-900 hover:bg-red-800 text-red-300">
+                  Delete
                 </button>
               </div>
             </div>
